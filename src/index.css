@@ -1,0 +1,15 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body{
+    background: #b92b27;  
+    background: -webkit-linear-gradient(to right, #1565C0, #b92b27); 
+    background: linear-gradient(to right, #1565C0, #b92b27); 
+    font-family: "Nunito", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+  }
