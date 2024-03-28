@@ -1,24 +1,42 @@
 import "./style/Header.css";
 import questions from "../../Questions";
-import { useState } from "react";
+import { useTimer } from "react-timer-hook";
+
 
 function Header() {
- 
-    const [isClicked, setClickedButton] = useState(null);
+  const randomIndex = Math.floor(Math.random() * questions.length);
+  const randomQuestion = questions[randomIndex];
+  const options = randomQuestion?.options || [];
 
- const randomIndex = Math.floor(Math.random() * questions.length);
+  const handleAnswer = (index) => {
+    const clickedAnswer = options[index];
 
- const randomQuestion = questions[randomIndex];
-
- const options = randomQuestion?.options || [];
-
- const handleAnswer = (event) => {
-    if(randomQuestion.options == randomQuestion.correct_answers){
-         event.target.classList.add("green");
+    if (Array.isArray(randomQuestion.correct_answer)) {
+      if (randomQuestion.correct_answer.includes(clickedAnswer)) {
+        document.getElementById(`button_${index}`).classList.add("green");
+      }
+    } else {
+      if (clickedAnswer === randomQuestion.correct_answer) {
+        document.getElementById(`button_${index}`).classList.add("green");
+      }
     }
- }
+  };
 
- 
+  function MyTimer({ expiryTimestamp }) {
+    const {
+      totalSeconds,
+      seconds,
+      minutes,
+      hours,
+      days,
+      isRunning,
+      start,
+      pause,
+      resume,
+      restart,
+    } = useTimer({ expiryTimestamp, onExpire: () => console.warn('onExpire called') });
+  
+
   return (
     <div className="container">
       <div className="quiz-container">
@@ -29,13 +47,21 @@ function Header() {
         <div className="question-container">
           <h1>{randomQuestion.question}</h1>
         </div>
-         <div className="buttons-container">
-            {options.map((option, index) => <button   onClick={handleAnswer} key={index}>{option}</button>)}
-         </div>
-         <div className="next-container">
-            <p>2 of 9 Question</p>
-            <button>Next</button>
-         </div>
+        <div className="buttons-container">
+          {options.map((option, index) => (
+            <button
+              id={`button_${index}`} 
+              key={index}
+              onClick={() => handleAnswer(index)}
+            >
+              {option}
+            </button>
+          ))}
+        </div>
+        <div className="next-container">
+          <p>2 of 9 Question</p>
+          <button>Next</button>
+        </div>
       </div>
     </div>
   );
