@@ -10,32 +10,25 @@ function Header() {
 
   const handleAnswer = (index) => {
     const clickedAnswer = options[index];
+    const correctAnswer = randomQuestion.correct_answer;
 
-    if (Array.isArray(randomQuestion.correct_answer)) {
-      if (randomQuestion.correct_answer.includes(clickedAnswer)) {
-        document.getElementById(`button_${index}`).classList.add("green");
-      }
+    if (Array.isArray(correctAnswer)) {
+        if (correctAnswer.includes(clickedAnswer)) {
+            document.getElementById(`button_${index}`).classList.add("green");
+        } else {
+            document.getElementById(`button_${index}`).classList.add('red');
+        }
     } else {
-      if (clickedAnswer === randomQuestion.correct_answer) {
-        document.getElementById(`button_${index}`).classList.add("green");
-      }
+        if (clickedAnswer === correctAnswer) {
+            document.getElementById(`button_${index}`).classList.add("green");
+            alert("Good job u got 1 point!")
+        } else {
+            document.getElementById(`button_${index}`).classList.add("red");
+            alert("Wrong!")
+        }
     }
-  };
+};
 
-  function MyTimer({ expiryTimestamp }) {
-    const {
-      totalSeconds,
-      seconds,
-      minutes,
-      hours,
-      days,
-      isRunning,
-      start,
-      pause,
-      resume,
-      restart,
-    } = useTimer({ expiryTimestamp, onExpire: () => console.warn('onExpire called') });
-  
 
   return (
     <div className="container">
